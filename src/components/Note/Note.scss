@@ -19,6 +19,17 @@
   &.expanded {
     box-shadow: 0px 4px 16px var(--note-box-shadow-expanded), 0px 0px 4px 0px var(--note-box-shadow);
   }
+
+  // START DS CHANGE
+  &.public {
+    background-color: #FFF8F4;
+  }
+
+  &.public {
+    background-color: #E4F1F8;
+  }
+  // END DS CHANGE
+
   &.is-multi-selected {
     box-shadow: 0px 4px 16px rgba(134, 142, 150, 0.24), 0px 0px 4px 0px var(--note-box-shadow);
   }

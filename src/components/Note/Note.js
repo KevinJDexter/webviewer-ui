@@ -182,12 +182,24 @@ const Note = ({
 
   const hasUnreadReplies = unreadReplyIdSet.size > 0;
 
+  /* START DS CHANGE
+  ** Adds the public and private properties to Notes for our own use
+  ** so that users can opt to show them to all users or restrict
+  ** it to only themselves and users mentioned via '@'
+  */ 
+  const privateValue = annotation.getCustomData('isPrivate') === 'false' ? false : true;
+
+  const [isPrivate, setIsPrivate] = useState(privateValue); 
+
   const noteClass = classNames({
     Note: true,
     expanded: isSelected,
     'is-multi-selected': isMultiSelected,
     unread: unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies,
+    private: isPrivate,
+    public: !isPrivate,
   });
+  //END DS CHANGE, setIsPrivate is passed to NoteContent elements below
 
   const repliesClass = classNames({
     replies: true,
@@ -276,6 +288,7 @@ const Note = ({
         noteIndex={0}
         annotation={annotation}
         setIsEditing={setIsEditing}
+        setIsPrivate={setIsPrivate} // DS CHANGE
         isEditing={isEditingMap[0]}
         isNonReplyNoteRead={!unreadAnnotationIdSet.has(annotation.Id)}
         isUnread={unreadAnnotationIdSet.has(annotation.Id) || hasUnreadReplies}
@@ -298,6 +311,7 @@ const Note = ({
               {replies.map((reply, i) => (
                 <div className="reply" id={`note_reply_${reply.Id}`} key={`note_reply_${reply.Id}`}>
                   <NoteContent
+                    setIsPrivate={setIsPrivate} // DS CHANGE
                     noteIndex={i + 1}
                     key={reply.Id}
                     annotation={reply}

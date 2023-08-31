@@ -14,6 +14,11 @@ import NoteHeader from 'components/NoteHeader';
 import NoteTextPreview from 'components/NoteTextPreview';
 import ReplyAttachmentList from 'components/ReplyAttachmentList';
 
+// START DS CHANGE
+import Toggle from 'react-toggle';
+import Icon from 'components/Icon';
+// END DS CHANGE
+
 import mentionsManager from 'helpers/MentionsManager';
 import getLatestActivityDate from 'helpers/getLatestActivityDate';
 import setAnnotationRichTextStyle from 'helpers/setAnnotationRichTextStyle';
@@ -47,10 +52,12 @@ const propTypes = {
   isMultiSelectMode: PropTypes.bool,
   handleMultiSelect: PropTypes.func,
   isGroupMember: PropTypes.bool,
+  setIsPrivate: PropTypes.func, // DS CHANGE, setIsPrivate is passed to ContentArea element below
 };
 
 const NoteContent = ({
   annotation,
+  setIsPrivate, // DS CHANGE
   isEditing,
   setIsEditing,
   noteIndex,
@@ -102,6 +109,10 @@ const NoteContent = ({
   const [t] = useTranslation();
 
   const isReply = annotation.isReply();
+
+  // START DS CHANGE
+  const [isPrivateMessage, setIsPrivateMessage] = useState(!(annotation.getCustomData('isPrivate') === 'false'));
+  // END DS CHANGE, setIsPrivateMessage is passed to ContentArea element below
 
   const [attachments, setAttachments] = useState([]);
 
@@ -323,6 +334,8 @@ const NoteContent = ({
               textAreaValue={textAreaValue}
               onTextAreaValueChange={setPendingEditText}
               pendingText={pendingEditTextMap[annotation.Id]}
+              setIsPrivate={setIsPrivate} // DS CHANGE
+              setIsPrivateMessage={setIsPrivateMessage} // DS CHANGE
             />
           ) : (
             contentsToRender && (
@@ -337,6 +350,21 @@ const NoteContent = ({
               </div>
             )
           )}
+          {/* START DS CHANGE
+          *** Add element to show a lock/unlock icon and brief explanation on public vs private
+          *** depending on current setting to the Note
+          */}
+          {isReply && (
+            <div className="message-container">
+              {!isEditing && isPrivateMessage && <Icon className="icon" glyph="mrll_lock"/>}
+              {!isEditing && !isPrivateMessage && <Icon className="icon" glyph="mrll_unlock"/>}
+              <span className="message">
+                {!isEditing && isPrivateMessage && t('annotation.privateText')}
+                {!isEditing && !isPrivateMessage && t('annotation.publicText')}
+              </span>
+            </div>
+          )}
+          {/* END DS CHANGE */}
         </>
       );
     },
@@ -400,7 +428,7 @@ const NoteContent = ({
           timezone={timezone}
         />
       );
-    }, [icon, iconColor, annotation, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember, timezone]
+    }, [icon, iconColor, annotation, setIsPrivate, setIsMessagePrivate, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember, timezone]
   );
 
   return (
@@ -423,7 +451,11 @@ const ContentArea = ({
   setIsEditing,
   textAreaValue,
   onTextAreaValueChange,
-  pendingText
+  pendingText,
+  // START DS CHANGE
+  setIsPrivate,
+  setIsPrivateMessage,
+  // END DS CHANGE
 }) => {
   const [
     autoFocusNoteOnAnnotationSelection,
@@ -443,6 +475,18 @@ const ContentArea = ({
   const [t] = useTranslation();
   const textareaRef = useRef();
   const isReply = annotation.isReply();
+
+  /* START DS CHANGE
+  ** Establishing values to determine Note privacy and toggle status
+  */
+  const contents = annotation.getCustomData('trn-mention')?.contents || annotation.getContents();
+  const showToggle = !annotation.getCustomData('id') && !annotation.isReply() && annotation.getReplies().length === 0;
+  const privateValue = annotation.getCustomData('isPrivate') === 'false' ? false : true;
+  const originallyPrivate = privateValue;
+  const [toggleOn, setToggleOn] = useState(privateValue);
+  const [toggleClicked, setToggleClicked] = useState(false);
+  // END DS CHANGE
+
   const {
     setCurAnnotId,
     pendingAttachmentMap,
@@ -522,6 +566,18 @@ const ContentArea = ({
     textAreaValue = mentionsManager.getFormattedTextFromDeltas(editor.getContents());
     setAnnotationRichTextStyle(editor, annotation);
 
+    /* START DS CHANGE
+    ** Determine if an edit has occurred to determine if updating contents is needed
+    */
+    const hasEdited = textAreaValue !== contents || toggleOn !== originallyPrivate;
+    if (!hasEdited) {
+      return;
+    }
+    if (!annotation.isReply()) {
+      annotation.setCustomData('isPrivate', toggleOn ? 'true' : 'false');
+    }
+    // END DS CHANGE
+
     if (isMentionEnabled) {
       const { plainTextValue, ids } = mentionsManager.extractMentionDataFromStr(textAreaValue);
 
@@ -558,11 +614,53 @@ const ContentArea = ({
       onTextAreaValueChange(undefined, annotation.Id);
     }
     clearAttachments(annotation.Id);
+
+    // START DS CHANGE
+    return textAreaValue ? textAreaValue.length === 0 : true;
+    // END DS CHANGE
   };
 
   const onBlur = () => {
     setCurAnnotId(undefined);
+    /* START DS CHANGE
+    ** Reset the toggle on blur
+    */
+    if (toggleClicked) {
+      setToggleClicked(false);
+    } else {
+      resetToggle();
+      setIsEditing(false, noteIndex);
+    }
+    //END DS CHANGE
   };
+
+  // START DS CHANGE
+
+  // Manages toggle and relevant private elements state when toggle changes
+  const handleToggleChange = () => {
+    setIsPrivate(!toggleOn);
+    setIsPrivateMessage(!toggleOn);
+    setToggleOn(!toggleOn);
+    testareaRef.current.focus();
+  };
+
+  const handleToggleClick = () => {
+    setToggleClicked(true);
+  }
+
+  // Resets toggle and relevant private elements to original setting
+  const resetToggle = () => {
+    if (!isReply) {
+      setIsPrivate(originallyPrivate);
+      setIsPrivateMessage(orignallyPrivate);
+      setToggleOn(originallyPrivate);
+    }
+  }
+
+  // Always true, as the only user that can edit the NoteContent is the original poster
+  // canMention is passed into NoteTextarea element below
+  canMention = true;
+  // END DS CHANGE
 
   const onFocus = () => {
     setCurAnnotId(annotation.Id);
@@ -590,30 +688,67 @@ const ContentArea = ({
         isReply={isReply}
         onBlur={onBlur}
         onFocus={onFocus}
+        canMention={canMention}
       />
+      {/* START DS CHANGE
+      *** Add element to show a lock/unlock icon and brief explanation on public vs private
+      *** depending on current setting to the Note
+      */}
+      {!isReply && <div className="message-container">
+        {toggleOn && <Icon className="icon" glyph="mrll_lock"/>}
+        {!toggleOn && <Icon className="icon" glyph="mrll_unlock"/>}
+        <span className="message">
+          {toggleOn && t('annotation.privateText')}
+          {!toggleOn && t('annotation.publicText')}
+        </span>
+      </div>}
+      {/* END DS CHANGE */}
       <div className="edit-buttons">
         <button
           className="cancel-button"
-          onClick={(e) => {
+          /* START DS CHANGE
+          ** Changing from onClick to onMouseDown
+          ** Swapped onTextAreaValueChange first param from undefined to contents (edits stored in case user returns to edit)
+          ** Added resetToggle and focus behavior
+          */
+          onMouseDown={(e) => {
             e.stopPropagation();
             setIsEditing(false, noteIndex);
-            // Clear pending text
-            onTextAreaValueChange(undefined, annotation.Id);
+            onTextAreaValueChange(contents, annotation.Id);
             clearAttachments(annotation.Id);
+            resetToggle();
+            textareaRef.current.focus();
           }}
+          // END DS CHANGE
         >
           {t('action.cancel')}
         </button>
         <button
-          className={`save-button${!textAreaValue ? ' disabled' : ''}`}
-          disabled={!textAreaValue}
-          onClick={(e) => {
+          className={`save-button${!textAreaValue || textAreaValue === contents ? ' disabled' : ''}`}
+          disabled={!textAreaValue || textAreaValue === contents}
+          onMouseDown={(e) => { // DS CHANGE, changing from onClick to onMouseDown
             e.stopPropagation();
             setContents(e);
           }}
         >
           {t('action.save')}
         </button>
+        {/* START DS CHANGE
+        *** Show toggle and associated Private/Public text
+        */}
+        {showToggle && 
+          <label className="private-toggle">
+            <span onMouseDown={handleToggleClick}>
+              <Toggle 
+                onChange={handleToggleChange}
+                checked={toggleOn}
+              />
+            </span>
+            {toggleOn && t('annotatoin.private')}
+            {!toggleOn && t('annotation.public')}
+          </label>
+        }
+        {/* END DS CHANGE */}
       </div>
     </div>
   );
@@ -625,7 +760,9 @@ ContentArea.propTypes = {
   setIsEditing: PropTypes.func.isRequired,
   textAreaValue: PropTypes.string,
   onTextAreaValueChange: PropTypes.func.isRequired,
-  pendingText: PropTypes.string
+  pendingText: PropTypes.string,
+  setIsPrivate: PropTypes.func, // DS CHANGE
+  setIsPrivateMessage: PropTypes.func, // DS CHANGE
 };
 
 const getRichTextSpan = (text, richTextStyle, key) => {

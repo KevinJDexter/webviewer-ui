@@ -182,6 +182,17 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
     onPendingReplyChange && onPendingReplyChange();
   };
 
+  /* START DS CHANGE
+  ** Determines if the active user is able to add Mentions to a Note by
+  ** confirming that they are the author, or ensuring that said Note is
+  ** public (ie. isPrivate returns false).
+  */
+  const authorId = annotation.getCustomDate('authorId');
+  const currentUserId = annotation.getCustomData('currentUserId');
+  const replierIsNoteAuthor = authorId === currentUserId;
+  const canMention = annotation.getCustomData('isPrivate') === 'false' || replierIsNoteAuthor;
+  // END DS CHANGE, canMention is passed to NoteTextarea element below
+
   const onBlur = () => {
     setIsFocused(false);
     setCurAnnotId(undefined);
@@ -220,6 +231,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
             onBlur={onBlur}
             onFocus={onFocus}
             isReply
+            canMention={canMention} // DS CHANGE
           />
         </div>
         <div className="reply-button-container">
