@@ -354,7 +354,7 @@ const NoteContent = ({
           *** Add element to show a lock/unlock icon and brief explanation on public vs private
           *** depending on current setting to the Note
           */}
-          {isReply && (
+          {!isReply && (
             <div className="message-container">
               {!isEditing && isPrivateMessage && <Icon className="icon" glyph="mrll_lock"/>}
               {!isEditing && !isPrivateMessage && <Icon className="icon" glyph="mrll_unlock"/>}
@@ -641,7 +641,7 @@ const ContentArea = ({
     setIsPrivate(!toggleOn);
     setIsPrivateMessage(!toggleOn);
     setToggleOn(!toggleOn);
-    testareaRef.current.focus();
+    textareaRef.current.focus();
   };
 
   const handleToggleClick = () => {
@@ -652,7 +652,7 @@ const ContentArea = ({
   const resetToggle = () => {
     if (!isReply) {
       setIsPrivate(originallyPrivate);
-      setIsPrivateMessage(orignallyPrivate);
+      setIsPrivateMessage(originallyPrivate);
       setToggleOn(originallyPrivate);
     }
   }
@@ -744,7 +744,7 @@ const ContentArea = ({
                 checked={toggleOn}
               />
             </span>
-            {toggleOn && t('annotatoin.private')}
+            {toggleOn && t('annotation.private')}
             {!toggleOn && t('annotation.public')}
           </label>
         }
