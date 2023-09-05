@@ -87,6 +87,7 @@ const CommentTextarea = React.forwardRef(
       onFocus,
       userData,
       isReply,
+      canMention
     },
     ref
   ) => {

@@ -187,7 +187,7 @@ const ReplyArea = ({ annotation, isUnread, onPendingReplyChange }) => {
   ** confirming that they are the author, or ensuring that said Note is
   ** public (ie. isPrivate returns false).
   */
-  const authorId = annotation.getCustomDate('authorId');
+  const authorId = annotation.getCustomData('authorId');
   const currentUserId = annotation.getCustomData('currentUserId');
   const replierIsNoteAuthor = authorId === currentUserId;
   const canMention = annotation.getCustomData('isPrivate') === 'false' || replierIsNoteAuthor;

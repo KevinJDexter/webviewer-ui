@@ -428,7 +428,7 @@ const NoteContent = ({
           timezone={timezone}
         />
       );
-    }, [icon, iconColor, annotation, setIsPrivate, setIsMessagePrivate, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember, timezone]
+    }, [icon, iconColor, annotation, setIsPrivate, setIsPrivateMessage, language, noteDateFormat, isSelected, setIsEditing, notesShowLastUpdatedDate, isReply, isUnread, renderAuthorName, core.getDisplayAuthor(annotation['Author']), isNoteStateDisabled, isEditing, noteIndex, getLatestActivityDate(annotation), sortStrategy, handleMultiSelect, isMultiSelected, isMultiSelectMode, isGroupMember, timezone]
   );
 
   return (
@@ -659,7 +659,7 @@ const ContentArea = ({
 
   // Always true, as the only user that can edit the NoteContent is the original poster
   // canMention is passed into NoteTextarea element below
-  canMention = true;
+  const canMention = true;
   // END DS CHANGE
 
   const onFocus = () => {
