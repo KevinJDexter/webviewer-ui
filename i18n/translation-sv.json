@@ -103,7 +103,10 @@
     "showComparison": "Visa jämförelse",
     "back": "Tillbaka",
     "clearSignature": "Tydlig signatur",
-    "newDocument": "Nytt dokument"
+    "newDocument": "Nytt dokument",
+    "askQuestion": "Ställ fråga",
+    "exportToExcel": "Exportera tabeller till Excel",
+    "findings": "Fynd"
   },
   "annotation": {
     "areaMeasurement": "Område",
@@ -156,7 +159,11 @@
     "3D": "3D",
     "sound": "Ljud",
     "changeView": "Ändra vy",
-    "newImage": "Ny bild"
+    "newImage": "Ny bild",
+    "public": "Publikt",
+    "publicText": "Alla med åtkomst kan visa",
+    "private": "Privat",
+    "privateText": "Du och taggade medlemmar kan visa"
   },
   "rubberStamp": {
     "Approved": "Godkänd",

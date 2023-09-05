@@ -103,7 +103,10 @@
     "showComparison": "显示比较",
     "back": "后退",
     "clearSignature": "清晰的签名",
-    "newDocument": "新建文件"
+    "newDocument": "新建文件",
+    "askQuestion": "提问",
+    "exportToExcel": "将表格导出到 Excel",
+    "findings": "查找结果"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -156,7 +159,11 @@
     "3D": "3D",
     "sound": "声音",
     "changeView": "更改视图",
-    "newImage": "新图片"
+    "newImage": "新图片",
+    "public": "公共",
+    "publicText": "有权访问的人都可以看到",
+    "private": "私人",
+    "privateText": "您和标记成员可以看到"
   },
   "rubberStamp": {
     "Approved": "已批准",

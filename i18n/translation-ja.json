@@ -103,7 +103,10 @@
     "showComparison": "比較を表示",
     "back": "戻る",
     "clearSignature": "明確な署名",
-    "newDocument": "新しいドキュメント"
+    "newDocument": "新しいドキュメント",
+    "askQuestion": "質問する",
+    "exportToExcel": "表をExcelにエクスポート",
+    "findings": "調査結果"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -156,7 +159,11 @@
     "3D": "3D",
     "sound": "サウンド",
     "changeView": "ビューを変更",
-    "newImage": "新しいイメージ"
+    "newImage": "新しいイメージ",
+    "public": "公開",
+    "publicText": "アクセス権を持つすべての人が表示可能",
+    "private": "非公開",
+    "privateText": "あなたとタグ付けされたメンバーのみ表示可能"
   },
   "rubberStamp": {
     "Approved": "承認済",

@@ -103,7 +103,10 @@
     "showComparison": "Mostra confronto",
     "back": "Di ritorno",
     "clearSignature": "Firma chiara",
-    "newDocument": "Nuovo documento"
+    "newDocument": "Nuovo documento",
+    "askQuestion": "Poni una domanda",
+    "exportToExcel": "Esporta tabelle in Excel",
+    "findings": "Risultati"
   },
   "annotation": {
     "areaMeasurement": "Misurazione dell'area",
@@ -156,7 +159,11 @@
     "3D": "3D",
     "sound": "Suono",
     "changeView": "Cambia punto di vista",
-    "newImage": "Nuova immagine"
+    "newImage": "Nuova immagine",
+    "public": "Pubblico",
+    "publicText": "Visualizzabile da tutti gli utenti autorizzati",
+    "private": "Privato",
+    "privateText": "Visualizzabile da te e dai membri contrassegnati"
   },
   "rubberStamp": {
     "Approved": "Approvato",

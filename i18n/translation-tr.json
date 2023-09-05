@@ -103,7 +103,10 @@
     "showComparison": "Karşılaştırmayı Göster",
     "back": "Geri",
     "clearSignature": "İmzayı temizle",
-    "newDocument": "Yeni belge"
+    "newDocument": "Yeni belge",
+    "askQuestion": "Soru Sor",
+    "exportToExcel": "Tabloları Excel'e aktar",
+    "findings": "Bulgular"
   },
   "annotation": {
     "areaMeasurement": "Alan",
@@ -156,7 +159,11 @@
     "3D": "3 boyutlu",
     "sound": "Ses",
     "changeView": "Görünümü değiştir",
-    "newImage": "Yeni görüntü"
+    "newImage": "Yeni görüntü",
+    "public": "Herkese açık",
+    "publicText": "Erişimi olan herkes görebilir",
+    "private": "Özel",
+    "privateText": "Siz ve etiketli üyeler görebilir"
   },
   "rubberStamp": {
     "Approved": "Onaylı",
