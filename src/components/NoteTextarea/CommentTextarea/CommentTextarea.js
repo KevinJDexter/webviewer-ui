@@ -87,6 +87,7 @@ const CommentTextarea = React.forwardRef(
       onFocus,
       userData,
       isReply,
+      canMention
     },
     ref
   ) => {
@@ -127,7 +128,7 @@ const CommentTextarea = React.forwardRef(
           className='comment-textarea ql-container ql-editor'
           style={{ overflowY: 'visible' }}
           ref={ref}
-          modules={userData && userData.length > 0 ? mentionModule : {}}
+          modules={canMention && userData && userData.length > 0 ? mentionModule : {}}
           theme="snow"
           value={value}
           placeholder={`${isReply ? t('action.reply') : t('action.comment')}...`}

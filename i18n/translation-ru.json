@@ -103,7 +103,10 @@
     "showComparison": "Показать сравнение",
     "back": "Назад",
     "clearSignature": "Очистить подпись",
-    "newDocument": "Новый документ"
+    "newDocument": "Новый документ",
+    "askQuestion": "Задать вопрос",
+    "exportToExcel": "Экспортировать таблицы в Excel",
+    "findings": "Сведения"
   },
   "annotation": {
     "areaMeasurement": "Площадь",
@@ -156,7 +159,11 @@
     "3D": "3D",
     "sound": "Звук",
     "changeView": "Сменить вид",
-    "newImage": "Новое изображение"
+    "newImage": "Новое изображение",
+    "public": "Общий",
+    "publicText": "Доступно каждому, у кого есть доступ",
+    "private": "Личный",
+    "privateText": "Доступно вам и отмеченным участникам"
   },
   "rubberStamp": {
     "Approved": "Одобренный",

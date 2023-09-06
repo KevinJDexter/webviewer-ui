@@ -103,7 +103,10 @@
     "showComparison": "Show Comparison",
     "back": "Back",
     "clearSignature": "Clear signature",
-    "newDocument": "New Document"
+    "newDocument": "New Document",
+    "askQuestion": "Ask Question",
+    "exportToExcel": "Export tables to Excel",
+    "findings": "Findings"
   },
   "annotation": {
     "areaMeasurement": "Area",
@@ -158,7 +161,11 @@
     "3D": "3D",
     "sound": "Sound",
     "changeView": "Change View",
-    "newImage": "New Image"
+    "newImage": "New Image",
+    "public": "Public",
+    "publicText": "Everyone with access can see",
+    "private": "Private",
+    "privateText": "You and tagged members can see"
   },
   "rubberStamp": {
     "Approved": "Approved",

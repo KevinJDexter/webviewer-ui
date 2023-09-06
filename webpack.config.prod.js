@@ -25,7 +25,6 @@ module.exports = {
       {
         from: './assets',
         to: '../build/assets',
-        ignore: ['icons/*.svg'],
       },
       {
         from: './src/configorigin.txt',

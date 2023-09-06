@@ -20,6 +20,9 @@ const propTypes = {
   onFocus: PropTypes.func,
   // a function that will be invoked when Ctrl + Enter or Cmd + Enter or only Enter are pressed
   onSubmit: PropTypes.func,
+  // START DS CHANGE
+  canMention: PropTypes.bool,
+  // END DS CHANGE
 };
 
 const NoteTextarea = React.forwardRef((props, forwardedRef) => {

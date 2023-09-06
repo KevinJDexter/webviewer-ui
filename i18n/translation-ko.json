@@ -103,7 +103,10 @@
     "showComparison": "비교 표시",
     "back": "뒤",
     "clearSignature": "명확한 서명",
-    "newDocument": "새 문서"
+    "newDocument": "새 문서",
+    "askQuestion": "질문하기",
+    "exportToExcel": "Excel로 표 내보내기",
+    "findings": "세부 정보"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -156,7 +159,11 @@
     "3D": "3D",
     "sound": "소리",
     "changeView": "보기 변경",
-    "newImage": "새 이미지"
+    "newImage": "새 이미지",
+    "public": "공개",
+    "publicText": "액세스 권한이 있는 사람은 모두 볼 수 있음",
+    "private": "비공개",
+    "privateText": "사용자와 태그된 회원이 볼 수 있음"
   },
   "rubberStamp": {
     "Approved": "승인",

@@ -103,7 +103,10 @@
     "showComparison": "Afficher la comparaison",
     "back": "Retour",
     "clearSignature": "Signature claire",
-    "newDocument": "Nouveau document"
+    "newDocument": "Nouveau document",
+    "askQuestion": "Poser une question",
+    "exportToExcel": "Exporter des tableaux dans Excel",
+    "findings": "Résultats"
   },
   "annotation": {
     "areaMeasurement": "Surface mesurée",
@@ -156,7 +159,11 @@
     "3D": "3D",
     "sound": "Sonner",
     "changeView": "Change de vue",
-    "newImage": "Nouvelle image"
+    "newImage": "Nouvelle image",
+    "public": "Public",
+    "publicText": "Toute personne autorisée peut consulter",
+    "private": "Privé",
+    "privateText": "Vous et les membres tagués peuvent consulter"
   },
   "rubberStamp": {
     "Approved": "Approuvée",
