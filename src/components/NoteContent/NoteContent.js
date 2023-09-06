@@ -484,7 +484,6 @@ const ContentArea = ({
   const privateValue = annotation.getCustomData('isPrivate') === 'false' ? false : true;
   const originallyPrivate = privateValue;
   const [toggleOn, setToggleOn] = useState(privateValue);
-  const [toggleClicked, setToggleClicked] = useState(false);
   // END DS CHANGE
 
   const {
@@ -622,16 +621,6 @@ const ContentArea = ({
 
   const onBlur = () => {
     setCurAnnotId(undefined);
-    /* START DS CHANGE
-    ** Reset the toggle on blur
-    */
-    if (toggleClicked) {
-      setToggleClicked(false);
-    } else {
-      resetToggle();
-      setIsEditing(false, noteIndex);
-    }
-    //END DS CHANGE
   };
 
   // START DS CHANGE
@@ -643,10 +632,6 @@ const ContentArea = ({
     setToggleOn(!toggleOn);
     textareaRef.current.focus();
   };
-
-  const handleToggleClick = () => {
-    setToggleClicked(true);
-  }
 
   // Resets toggle and relevant private elements to original setting
   const resetToggle = () => {
@@ -738,7 +723,7 @@ const ContentArea = ({
         */}
         {showToggle && 
           <label className="private-toggle">
-            <span onMouseDown={handleToggleClick}>
+            <span>
               <Toggle 
                 onChange={handleToggleChange}
                 checked={toggleOn}
