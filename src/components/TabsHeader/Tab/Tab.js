@@ -19,7 +19,7 @@ const propTypes = {
 const Tab = ({ tab, setActive, onDragLeave, onDragStart, onDragOver, isActive, closeTab, id, isToLeftOfActive }) => {
   const [disabled, setDisabled] = useState(tab?.disabled);
   const removeExtension = true;
-  const name = removeExtension ? tab.options.filename.split('.')[0] : tab.options.filename;
+  const name = removeExtension ? tab.options.filename.split('.').slice(0, -1).join('.') : tab.options.filename;
 
   useEffect(() => {
     if (tab && tab.disabled !== disabled) {
